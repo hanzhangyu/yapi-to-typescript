@@ -5,12 +5,12 @@ import { Generator } from '../src/Generator'
 
 const apiDir = path.join(__dirname, '../api')
 
-beforeAll(() => {
+beforeEach(() => {
   fs.ensureDirSync(apiDir)
   fs.emptyDirSync(apiDir)
 })
 
-afterAll(() => {
+beforeEach(() => {
   fs.removeSync(apiDir)
 })
 
@@ -51,7 +51,7 @@ const generatorFactory = (typesOnly: boolean) => {
 
 describe('Generator', () => {
   test('正确生成代码并写入文件', async () => {
-    const generator = generatorFactory(false);
+    const generator = generatorFactory(false)
     const output = await generator.generate()
     forOwn(output, ({ content }) => {
       expect(content).toMatchSnapshot()
@@ -65,7 +65,7 @@ describe('Generator', () => {
   })
 
   test('只生成类型代码并写入文件', async () => {
-    const generator = generatorFactory(true);
+    const generator = generatorFactory(true)
     const output = await generator.generate()
     forOwn(output, ({ content }) => {
       expect(content).toMatchSnapshot()
